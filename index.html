@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect to LINE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      const ua = navigator.userAgent.toLowerCase();
+      const isMobile = /android|iphone|ipod|opera mini|iemobile|wpdesktop/i.test(ua);
+      const isIpadOS = /ipad/.test(ua) || (ua.includes('macintosh') && navigator.maxTouchPoints > 1);
+
+      const deepLink = 'line://oaMessage/@scbeic/?kx';     // เปิดแอป LINE
+      const webFallback = 'https://page.line.me/scbeic';     // หน้า OA fallback
+
+      if (isMobile || isIpadOS) {
+        // พยายามเปิดด้วยแอป LINE
+        window.location.href = deepLink;
+
+        // ถ้าไม่มี LINE แอป (deep link ไม่ทำงาน) ให้ fallback หลัง 1.5 วินาที
+        setTimeout(() => {
+          window.location.href = webFallback;
+        }, 1500);
+      } else {
+        // คอมพิวเตอร์: ส่งไปหน้า OA ปกติ
+        window.location.href = webFallback;
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p>กำลังนำคุณไปยัง LINE...</p>
+</body>
+</html>
